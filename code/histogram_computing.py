@@ -228,6 +228,7 @@ def compute(data, N, internal, row, col, length):
     return hist
     # his_CPU = np.histogram(light,bins=his_inter)[0]
     # return his_CPU
+    
 def third_step(test_name,load_model = 'Yes'):
     '''
     @count means the input file for classify
