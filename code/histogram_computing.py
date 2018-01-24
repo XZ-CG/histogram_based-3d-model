@@ -228,12 +228,27 @@ def compute(data, N, internal, row, col, length):
     return hist
     # his_CPU = np.histogram(light,bins=his_inter)[0]
     # return his_CPU
-
+def third_step(test_name,load_model = 'Yes'):
+    '''
+    @count means the input file for classify
+    @load_model means whether to use the old training dataset of model
+    '''
+    if load_model == 'Yes':
+        model = pickle.load(open("temp.txt",'r'))
+    else:
+        input_list = Create_input_data() 
+        input_label = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
+        model = sk.RandomForestClassifier(n_estimators = 1000)
+        model.fit(input_list,input_label)
+        pickle.dump(model,open("temp.txt",'w'))
+    
+    x_test = Create_seq_data(test_name)
+    predicted = model.predict(x_test)
+    return predicted[0]
+	
 def main():
     start = datetime.now()
     os.chdir("E:\\pycharm\\fast_histogram\\code")
-    # name = [i for i in os.listdir(os.getcwd()) if i.split('.')[1] == 'txt']
-    # name.remove("xxx.txt")
     name = ["test_1.txt"]
 
     for name_asteroid in name:
@@ -250,6 +265,8 @@ def main():
         for i in xrange(0, N):
             hist += compute(data, i, internal, row, col, length)
         np.savetxt('f%s' % (name_asteroid), hist, fmt="%d")
+		result = third_step('f%d_0.txt'%count,load_model = 'Yes')
+    foo.write("".join([name_asteroid,' ',result,' ',str(length),'\n'])) 
     print(datetime.now() - start)
 
 if __name__ == "__main__":
