@@ -266,8 +266,8 @@ def main():
             hist += compute(data, i, internal, row, col, length)
         np.savetxt('f%s' % (name_asteroid), hist, fmt="%d")
 		result = third_step('f%d_0.txt'%count,load_model = 'Yes')
-    foo.write("".join([name_asteroid,' ',result,' ',str(length),'\n'])) 
-    print(datetime.now() - start)
+		foo.write("".join([name_asteroid,' ',result,' ',str(length),'\n']))
+		print(datetime.now() - start)
 
 if __name__ == "__main__":
     main()
